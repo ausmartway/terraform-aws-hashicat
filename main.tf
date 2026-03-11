@@ -152,8 +152,8 @@ resource "null_resource" "configure-cat-app" {
   }
 
   provisioner "file" {
-    source      = "files/"
-    destination = "/home/ubuntu/"
+    source      = "files/deploy_app.sh"
+    destination = "/home/ubuntu/deploy_app.sh"
 
     connection {
       type        = "ssh"
