@@ -56,3 +56,12 @@ variable "placeholder" {
     error_message = "Placeholder must be one of placecats.com, placebear.com, or https://placedog.net/."
   }
 }
+
+variable "number_of_instances" {
+  default     = 1
+  description = "Number of instances to create."
+  validation {
+    condition     = var.number_of_instances > 0 && var.number_of_instances <= 2
+    error_message = "Number of instances must be between 1 and 2."
+  }
+}
