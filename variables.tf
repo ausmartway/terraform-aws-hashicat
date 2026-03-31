@@ -11,7 +11,7 @@ variable "prefix" {
 
 variable "region" {
   description = "The region where the resources are created."
-  default     = "us-east-1"
+  default     = "ap-southeast-1"
 }
 
 variable "address_space" {
@@ -26,7 +26,11 @@ variable "subnet_prefix" {
 
 variable "instance_type" {
   description = "Specifies the AWS instance type."
-  default     = "t2.micro"
+  default     = "t3.micro"
+  validation {
+    condition     = contains(["t3.micro", "t3.xlarge", "t3.2xlarge"], var.instance_type)
+    error_message = "Instance type must be one of t3.micro, t3.xlarge, or t3.2xlarge."
+  }
 }
 
 variable "admin_username" {
@@ -35,16 +39,20 @@ variable "admin_username" {
 }
 
 variable "height" {
-  default     = "400"
+  default     = "800"
   description = "Image height in pixels."
 }
 
 variable "width" {
-  default     = "600"
+  default     = "1200"
   description = "Image width in pixels."
 }
 
 variable "placeholder" {
-  default     = "placekitten.com"
+  default     = "placecats.com"
   description = "Image-as-a-service URL. Some other fun ones to try are fillmurray.com, placecage.com, placebeard.it, loremflickr.com, baconmockup.com, placeimg.com, placebear.com, placeskull.com, stevensegallery.com, placedog.net"
+    validation {
+    condition     = contains(["placecats.com", "placebear.com", "https://placedog.net/"], var.placeholder)
+    error_message = "Placeholder must be one of placecats.com, placebear.com, or https://placedog.net/."
+  }
 }
