@@ -148,6 +148,7 @@ resource "aws_instance" "hashicat" {
 # Add execute permissions to our scripts.
 # Run the deploy_app.sh script.
 resource "null_resource" "configure-cat-app" {
+  count =  var.number_of_instances
   depends_on = [aws_eip_association.hashicat]
 
   triggers = {
@@ -155,6 +156,7 @@ resource "null_resource" "configure-cat-app" {
   }
 
   provisioner "file" {
+
     source      = "${path.module}/files/deploy_app.sh"
     destination = "/home/ubuntu/deploy_app.sh"
 
