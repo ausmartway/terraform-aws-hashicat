@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "aws" {
-  region  = var.region
+  region = var.region
 }
 
 resource "aws_vpc" "hashicat" {
@@ -16,7 +16,7 @@ resource "aws_vpc" "hashicat" {
   enable_dns_hostnames = true
 
   tags = {
-    name = "${var.prefix}-vpc-${var.region}"
+    name        = "${var.prefix}-vpc-${var.region}"
     environment = "Production"
   }
 }
@@ -122,7 +122,7 @@ resource "aws_eip_association" "hashicat" {
 }
 
 resource "aws_instance" "hashicat" {
-  count = var.number_of_instances
+  count                       = var.number_of_instances
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
   key_name                    = aws_key_pair.hashicat.key_name
@@ -148,7 +148,7 @@ resource "aws_instance" "hashicat" {
 # Add execute permissions to our scripts.
 # Run the deploy_app.sh script.
 resource "null_resource" "configure-cat-app" {
-  count =  var.number_of_instances
+  count      = var.number_of_instances
   depends_on = [aws_eip_association.hashicat]
 
   triggers = {

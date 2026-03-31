@@ -1,8 +1,8 @@
 # Outputs file
 output "catapp_url" {
-  value = "http://${aws_eip.hashicat[*].public_dns}"
+  value = [for dns in aws_eip.hashicat[*].public_dns : "http://${dns}"]
 }
 
 output "catapp_ip" {
-  value = "http://${aws_eip.hashicat[*].public_ip}"
+  value = [for ip in aws_eip.hashicat[*].public_ip : "${ip}"]
 }
